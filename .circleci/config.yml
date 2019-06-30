@@ -380,6 +380,11 @@ jobs:
     steps:
     - checkout
     - run:
+        name: "Build Package"
+        command: |
+          npm install
+          grunt
+    - run:
         name: "Run jUnit tests"
         command: |
           npm install
