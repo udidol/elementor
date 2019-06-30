@@ -383,10 +383,8 @@ jobs:
         name: "Build Package"
         command: |
           npm install
-          grunt
+          grunt scripts
     - run:
         name: "Run jUnit tests"
         command: |
-          npm install
-          grunt
           npm run test:qunit
