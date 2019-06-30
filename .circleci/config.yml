@@ -2,41 +2,42 @@ workflows:
   version: 2
   tests:
     jobs:
-    - php54-wp51-build
-    - php54-wp50-build
-    - php54-wp49-build
-    - php54-wp48-build
-    - php54-wp47-build
-    - php55-wp51-build
-    - php55-wp50-build
-    - php55-wp49-build
-    - php55-wp48-build
-    - php55-wp47-build
-    - php56-wp-latest-build
-    - php56-wp51-build
-    - php56-wp50-build
-    - php56-wp49-build
-    - php56-wp48-build
-    - php56-wp47-build
-    - php70-wp-latest-build
-    - php70-wp51-build
-    - php70-wp50-build
-    - php70-wp49-build
-    - php70-wp48-build
-    - php70-wp47-build
-    - php71-wp-latest-build
-    - php71-wp51-build
-    - php71-wp50-build
-    - php71-wp49-build
-    - php71-wp48-build
-    - php71-wp47-build
-    - php72-wp-latest-build
-    - php72-wp51-build
-    - php72-wp50-build
-    - php72-wp49-build
-    - php72-wp48-build
-    - php72-wp47-build
-    - php-js-lints
+    #- php54-wp51-build
+    #- php54-wp50-build
+    #- php54-wp49-build
+    #- php54-wp48-build
+    #- php54-wp47-build
+    #- php55-wp51-build
+    #- php55-wp50-build
+    #- php55-wp49-build
+    #- php55-wp48-build
+    #- php55-wp47-build
+    #- php56-wp-latest-build
+    #- php56-wp51-build
+    #- php56-wp50-build
+    #- php56-wp49-build
+    #- php56-wp48-build
+    #- php56-wp47-build
+    #- php70-wp-latest-build
+    #- php70-wp51-build
+    #- php70-wp50-build
+    #- php70-wp49-build
+    #- php70-wp48-build
+    #- php70-wp47-build
+    #- php71-wp-latest-build
+    #- php71-wp51-build
+    #- php71-wp50-build
+    #- php71-wp49-build
+    #- php71-wp48-build
+    #- php71-wp47-build
+    #- php72-wp-latest-build
+    #- php72-wp51-build
+    #- php72-wp50-build
+    #- php72-wp49-build
+    #- php72-wp48-build
+    #- php72-wp47-build
+    #- php-js-lints
+    - qunit
 
 version: 2
 
@@ -371,3 +372,16 @@ jobs:
         path: ~/junit
     - store_artifacts:
         path: ~/junit
+
+
+  qunit:
+    docker:
+    - image: pojome/php-js-lints
+    steps:
+    - checkout
+    - run:
+        name: "Run jUnit tests"
+        command: |
+          npm install
+          grunt
+          npm run test:qunit
