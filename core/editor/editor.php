@@ -451,6 +451,16 @@ class Editor {
 		);
 
 		wp_register_script(
+			'elementor-gallery',
+			ELEMENTOR_ASSETS_URL . 'lib/e-gallery/js/e-gallery' . $suffix . '.js',
+			[
+				'jquery',
+			],
+			'1.0.2',
+			true
+		);
+
+		wp_register_script(
 			'elementor-editor',
 			ELEMENTOR_ASSETS_URL . 'js/editor' . $suffix . '.js',
 			[
@@ -470,6 +480,7 @@ class Editor {
 				'ace-language-tools',
 				'jquery-hover-intent',
 				'nouislider',
+				'elementor-gallery',
 			],
 			ELEMENTOR_VERSION,
 			true
@@ -821,6 +832,13 @@ class Editor {
 		);
 
 		wp_register_style(
+			'elementor-gallery',
+			ELEMENTOR_ASSETS_URL . 'lib/e-gallery/css/e-gallery' . $suffix . '.css',
+			[],
+			'1.0.2'
+		);
+
+		wp_register_style(
 			'elementor-editor',
 			ELEMENTOR_ASSETS_URL . 'css/editor' . $direction_suffix . $suffix . '.css',
 			[
@@ -830,6 +848,7 @@ class Editor {
 				'wp-auth-check',
 				'google-font-roboto',
 				'flatpickr',
+				'elementor-gallery',
 			],
 			ELEMENTOR_VERSION
 		);

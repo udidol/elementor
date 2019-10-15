@@ -358,7 +358,7 @@ label.elementor-template-library-order-label {
 	}
 
 	&:not(.elementor-template-library-template-page) {
-		position: relative;
+		//position: relative;
 		width: calc(33.333% - #{$remote-templates-items-space});
 		overflow: hidden;
 

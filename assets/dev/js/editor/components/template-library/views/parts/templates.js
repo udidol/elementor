@@ -185,7 +185,16 @@ TemplateLibraryCollectionView = Marionette.CompositeView.extend( {
 		this.toggleFilterClass();
 
 		if ( 'remote' === elementor.templates.getFilter( 'source' ) && 'page' !== elementor.templates.getFilter( 'type' ) ) {
-			this.setMasonrySkin();
+			//this.setMasonrySkin();
+
+			this.$childViewContainer.imagesLoaded( new EGallery( {
+				container: this.$childViewContainer,
+				type: 'masonry',
+				columns: 3,
+				horizontalGap: 30,
+				verticalGap: 44,
+				rtl: elementorFrontend.config.is_rtl,
+			} ) );
 		}
 	},
 

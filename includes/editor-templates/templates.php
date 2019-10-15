@@ -139,7 +139,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<# if ( 'page' === type ) { #>
 			<div class="elementor-template-library-template-screenshot" style="background-image: url({{ thumbnail }});"></div>
 		<# } else { #>
-			<img src="{{ thumbnail }}">
+			<img class="e-gallery-image" data-thumbnail="{{ thumbnail }}">
 		<# } #>
 		<div class="elementor-template-library-template-preview">
 			<i class="eicon-zoom-in" aria-hidden="true"></i>

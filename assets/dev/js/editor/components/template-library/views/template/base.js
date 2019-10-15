@@ -16,6 +16,9 @@ TemplateLibraryTemplateView = Marionette.ItemView.extend( {
 			classes += ' elementor-template-library-pro-template';
 		}
 
+		// For integrating Elementor Gallery into the template blocks screen
+		classes += ' e-gallery-item';
+
 		return classes;
 	},
 
