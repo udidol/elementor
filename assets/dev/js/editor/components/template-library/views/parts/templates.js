@@ -194,6 +194,7 @@ TemplateLibraryCollectionView = Marionette.CompositeView.extend( {
 				horizontalGap: 30,
 				verticalGap: 44,
 				rtl: elementorFrontend.config.is_rtl,
+				lazyLoad: true,
 			} ) );
 		}
 	},
