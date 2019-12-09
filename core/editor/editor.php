@@ -427,24 +427,6 @@ class Editor {
 		);
 
 		wp_register_script(
-			'ace',
-			'https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.5/ace.js',
-			[],
-			'1.2.5',
-			true
-		);
-
-		wp_register_script(
-			'ace-language-tools',
-			'https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.5/ext-language_tools.js',
-			[
-				'ace',
-			],
-			'1.2.5',
-			true
-		);
-
-		wp_register_script(
 			'jquery-hover-intent',
 			ELEMENTOR_ASSETS_URL . 'lib/jquery-hover-intent/jquery-hover-intent' . $suffix . '.js',
 			[],
@@ -469,6 +451,14 @@ class Editor {
 		);
 
 		wp_register_script(
+			'elementor-codemirror-addons',
+			ELEMENTOR_ASSETS_URL . 'lib/codemirror/codemirror-addons' . $suffix . '.js',
+			[],
+			'1.0.0',
+			true
+		);
+
+		wp_register_script(
 			'elementor-editor',
 			ELEMENTOR_ASSETS_URL . 'js/editor' . $suffix . '.js',
 			[
@@ -485,8 +475,9 @@ class Editor {
 				'heartbeat',
 				'jquery-elementor-select2',
 				'flatpickr',
-				'ace',
-				'ace-language-tools',
+				'wp-codemirror',
+				'elementor-codemirror-addons',
+				'csslint',
 				'jquery-hover-intent',
 				'nouislider',
 				'pickr',
@@ -897,6 +888,9 @@ class Editor {
 
 			wp_add_inline_style( 'elementor-editor', '.elementor-device-tablet #elementor-preview-responsive-wrapper { width: ' . $breakpoints['md'] . 'px; }' );
 		}
+
+		// Enqueue the CodeMirror stylesheet registered by WP core, for the Custom CSS editor
+		wp_enqueue_style( 'wp-codemirror' );
 
 		/**
 		 * After editor enqueue styles.

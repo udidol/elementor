@@ -13,57 +13,37 @@ ControlCodeEditorItemView = ControlBaseDataView.extend( {
 	onReady: function() {
 		var self = this;
 
-		if ( 'undefined' === typeof ace ) {
+		if ( 'undefined' === typeof CodeMirror ) {
 			return;
 		}
 
-		const langTools = ace.require( 'ace/ext/language_tools' ),
-			uiTheme = elementor.settings.editorPreferences.model.get( 'ui_theme' ),
+		// Check for user preference and user settings for light/dark theme
+		const uiTheme = elementor.settings.editorPreferences.model.get( 'ui_theme' ),
 			userPrefersDark = matchMedia( '(prefers-color-scheme: dark)' ).matches;
 
-		self.editor = ace.edit( this.ui.editor[ 0 ] );
+		// Initialize Codemirror on the code control textarea element
+		self.editor = wp.CodeMirror.fromTextArea( this.ui.editor[ 0 ], {
+			mode: 'text/css',
+			lint: true,
+			gutters: [ 'CodeMirror-lint-markers', 'CodeMirror-linenumbers', 'CodeMirror-foldgutter' ],
+			foldGutter: true,
+			lineNumbers: true,
+			lineWrapping: true,
+			autoRefresh: true, // Loads the control's saved value into the editor when it becomes visible
+			autoCloseTags: true,
+			styleActiveLine: true,
+		} );
 
 		jQuery( self.editor.container ).addClass( 'elementor-input-style elementor-code-editor' );
 
-		self.editor.setOptions( {
-			mode: 'ace/mode/' + self.model.attributes.language,
-			minLines: 10,
-			maxLines: Infinity,
-			showGutter: true,
-			useWorker: true,
-			enableBasicAutocompletion: true,
-			enableLiveAutocompletion: true,
-		} );
-
+		// Set the editor's color scheme according to user's preference
 		if ( 'dark' === uiTheme || ( 'auto' === uiTheme && userPrefersDark ) ) {
-			self.editor.setTheme( 'ace/theme/merbivore_soft' );
+			self.editor.setOption( 'theme', 'elementor-dark' );
+		} else {
+			self.editor.setOption( 'theme', 'elementor-light' );
 		}
 
-		self.editor.getSession().setUseWrapMode( true );
-
-		elementor.panel.$el.on( 'resize.aceEditor', self.onResize.bind( this ) );
-
-		if ( 'css' === self.model.attributes.language ) {
-			var selectorCompleter = {
-				getCompletions: function( editor, session, pos, prefix, callback ) {
-					var list = [],
-						token = session.getTokenAt( pos.row, pos.column );
-
-					if ( 0 < prefix.length && 'selector'.match( prefix ) && 'constant' === token.type ) {
-						list = [ {
-							name: 'selector',
-							value: 'selector',
-							score: 1,
-							meta: 'Elementor',
-						} ];
-					}
-
-					callback( null, list );
-				},
-			};
-
-			langTools.addCompleter( selectorCompleter );
-		}
+		// TODO: add the word 'selector' to the autocomplete system
 
 		self.editor.setValue( self.getControlValue(), -1 ); // -1 =  move cursor to the start
 
@@ -71,34 +51,13 @@ ControlCodeEditorItemView = ControlBaseDataView.extend( {
 			self.setValue( self.editor.getValue() );
 		} );
 
-		if ( 'html' === self.model.attributes.language ) {
-			// Remove the `doctype` annotation
-			var session = self.editor.getSession();
-
-			session.on( 'changeAnnotation', function() {
-				var annotations = session.getAnnotations() || [],
-					annotationsLength = annotations.length,
-					index = annotations.length;
-
-				while ( index-- ) {
-					if ( /doctype first\. Expected/.test( annotations[ index ].text ) ) {
-						annotations.splice( index, 1 );
-					}
-				}
-
-				if ( annotationsLength > annotations.length ) {
-					session.setAnnotations( annotations );
-				}
-			} );
-		}
-	},
-
-	onResize: function() {
-		this.editor.resize();
-	},
-
-	onDestroy: function() {
-		elementor.panel.$el.off( 'resize.aceEditor' );
+		// Add triggers for the autocomplete function to the CodeMirror instance
+		self.editor.on( 'keyup', function( cm, event ) {
+			if ( ! cm.state.completionActive && // Enables keyboard navigation in autocomplete list
+				! self.editor.excludedIntelliSenseKeys[ ( event.keyCode || event.which ).toString() ] ) { // Do not open autocomplete list on these keys being hit
+				wp.CodeMirror.commands.autocomplete( cm, null, { completeSingle: false } ); // trigger autocomplete
+			}
+		} );
 	},
 } );
 
