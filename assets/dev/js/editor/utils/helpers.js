@@ -191,6 +191,25 @@ module.exports = {
 		if ( mapping[ fa4Value ] ) {
 			return mapping[ fa4Value ];
 		}
+
+		const navMenuMapping = {
+			chevron: 'fa fa-chevron-down',
+			angle: 'fa fa-angle-down',
+			classic: 'fa fa-caret-down',
+			plus: 'fa fa-plus',
+		};
+
+		if ( navMenuMapping[ fa4Value ] ) {
+			fa4Value = navMenuMapping[ fa4Value ];
+		}
+
+		if ( 'none' === fa4Value ) {
+			return {
+				value: '',
+				library: '',
+			};
+		}
+
 		// every thing else is converted to solid
 		return {
 			value: 'fas' + fa4Value.replace( 'fa ', ' ' ),
