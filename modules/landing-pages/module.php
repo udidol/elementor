@@ -58,7 +58,7 @@ class Module extends BaseModule {
 		// `'posts_per_page' => 1` is because this is only used as an indicator to whether there are any landing pages.
 		$this->posts = new \WP_Query( [
 			'post_type' => self::CPT,
-			'post_status' => [ 'publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit' ],
+			'post_status' => [ 'any' ],
 			'posts_per_page' => 1,
 		] );
 
