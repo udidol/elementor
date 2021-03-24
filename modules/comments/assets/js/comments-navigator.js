@@ -116,6 +116,8 @@ export default class extends elementorModules.ViewModule {
 			this.modal.hide();
 		} else {
 			this.modal.show();
+
+			elementorCommon.elements.$window.trigger( 'elementor/frontend/modal/init' );
 		}
 	}
 }

@@ -136,7 +136,11 @@ jQuery( () => {
 
 	document.body.appendChild( element );
 
-	document.querySelector( '#wp-admin-bar-elementor_comments a' ).addEventListener( 'click', () => isActive = ! isActive );
+	elementorCommon.elements.$window.on( 'elementor/frontend/modal/init', () => {
+		document.querySelector( '#e-comments__add-comment' ).addEventListener( 'click', () => {
+			isActive = ! isActive;
+		} );
+	} );
 
 	fetch( elementorCommon.config.urls.rest + 'wp/v2/comments?post=' + elementorCommon.config.post_id )
 		.then( ( response ) => response.json() )
