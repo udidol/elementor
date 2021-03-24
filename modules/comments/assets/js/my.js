@@ -80,6 +80,12 @@ function NewComment( props ) {
 		setClosed( true );
 	};
 
+	useEffect(() => {
+		$( '#comment-open' ).click(function() {
+			$( "svg" ).toggle();
+		});
+	}, [])
+
 	if ( closed ) {
 		return '';
 	}
@@ -88,9 +94,16 @@ function NewComment( props ) {
 		! data ? ( <div className="comment-modal">
 			<div>
 				<input placeholder="Add a comment. Use @ to mention" className="comment-modal-input" style={{ width: '100%' }} value={input} onChange={( e ) => setInput( e.target.value )} />
-				<button className="comment-modal-submit" onClick={( e ) => submit( e )}>Submit</button>
-				<span id="comment-open"/>
-				<button className="comment-modal-cancel" onClick={( e ) => close( e )}>Cancel</button>
+				<div id="comment-box-left">
+					<span id="comment-open">
+					<svg width="12" height="16" viewBox="0 0 12 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.5 5.375H9.75V3.875C9.75 1.805 8.07 0.125 6 0.125C3.93 0.125 2.25 1.805 2.25 3.875H3.75C3.75 2.63 4.755 1.625 6 1.625C7.245 1.625 8.25 2.63 8.25 3.875V5.375H1.5C0.675 5.375 0 6.05 0 6.875V14.375C0 15.2 0.675 15.875 1.5 15.875H10.5C11.325 15.875 12 15.2 12 14.375V6.875C12 6.05 11.325 5.375 10.5 5.375ZM1.5 14.375V6.875H10.5V14.375H1.5ZM7.5 10.625C7.5 11.45 6.825 12.125 6 12.125C5.175 12.125 4.5 11.45 4.5 10.625C4.5 9.8 5.175 9.125 6 9.125C6.825 9.125 7.5 9.8 7.5 10.625Z" fill="black" fill-opacity="0.54"/></svg>
+					<svg style="display: none" xmlns="http://www.w3.org/2000/svg" width="12" height="16" fill="none"><path fill="#000" fill-opacity=".54" fill-rule="evenodd" d="M12.75 6.375h.75c.825 0 1.5.675 1.5 1.5v7.5c0 .825-.675 1.5-1.5 1.5h-9c-.825 0-1.5-.675-1.5-1.5v-7.5c0-.825.675-1.5 1.5-1.5h.75v-1.5c0-2.07 1.68-3.75 3.75-3.75 2.07 0 3.75 1.68 3.75 3.75v1.5zM9 2.625a2.247 2.247 0 00-2.25 2.25v1.5h4.5v-1.5A2.247 2.247 0 009 2.625zm-4.5 12.75v-7.5h9v7.5h-9zm6-3.75c0 .825-.675 1.5-1.5 1.5s-1.5-.675-1.5-1.5.675-1.5 1.5-1.5 1.5.675 1.5 1.5z" clip-rule="evenodd"/></svg>
+				Public</span>
+				</div>
+				<div id="comment-box-right">
+					<button className="comment-modal-cancel" onClick={( e ) => close( e )}>Cancel</button>
+					<button className="comment-modal-submit" onClick={( e ) => submit( e )}>Submit</button>
+				</div>
 			</div>
 		</div> ) : <Comment { ...data } comments={[]} />
 	);

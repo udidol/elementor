@@ -12,15 +12,75 @@
 }
 
 .comment-modal {
+	font-size: 13px;
 	z-index: 100;
 	position: absolute;
 	top: 0;
 	right: 0;
-	width: 300px;
+	width: 350px;
 	background: white;
 	margin-top: 20px;
-	padding: 20px;
+	padding: 10px;
 	border: 1px solid #A4AFB7;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.06);
 	border-radius: 4px;
+	border: 1px solid #A4AFB7;
+}
+button.comment-modal-cancel {
+    background: #fff;
+    color: #2F2F2F;
+    border: 1px solid #A4AFB7;
+	padding: 2px 20px;
+	font-size: 13px;
+}
+
+button.comment-modal-submit {
+    background: #4AB7F4;
+    border: 1px solid #4AB7F4;
+    color: #fff;
+	padding: 2px 20px;
+	margin-left: 5px;
+	font-size: 13px;
+}
+
+div#comment-box-right {
+    text-align: right;
+	display: inline-block;
+	float: right;
+}
+
+div#comment-box-left {
+    text-align: left;
+	display: inline-block;
+}
+
+.comment-modal div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+input.comment-modal-input {
+    margin-bottom: 10px;
+}
+
+button.comment-modal-submit:hover {
+    background: #2496d5;
+    border-color: #2496d5;
+}
+
+button.comment-modal-cancel:hover {
+    background: #f8f8f8;
+}
+
+#comment-open svg {
+    margin-right: 5px;
+}
+
+.comment-modal input::placeholder {
+	font-size: 13px;
+}
+.comment-modal input {
+    border: 1px solid #A4AFB7;
 }
