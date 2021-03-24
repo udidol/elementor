@@ -3,6 +3,7 @@ export default class extends elementorModules.ViewModule {
 		return {
 			selectors: {
 				editorPanelFooterToggle: '#elementor-panel-footer-comments',
+				adminBarToggle: '#wp-admin-bar-elementor_comments',
 				closeButton: '#e-comments__close',
 			},
 		};
@@ -12,28 +13,63 @@ export default class extends elementorModules.ViewModule {
 		const elements = {};
 		const selectors = this.getSettings( 'selectors' );
 
-		elements.$editorPanelFooterToggle = jQuery( selectors.editorPanelFooterToggle );
+		if ( elementorFrontend.isEditMode() ) {
+			elements.$editorPanelFooterToggle = jQuery( selectors.editorPanelFooterToggle );
+		} else {
+			elements.$adminBarToggle = jQuery( selectors.adminBarToggle );
+		}
+
 		elements.$closeButton = jQuery( selectors.closeButton );
 
 		return elements;
 	}
 
 	bindEvents() {
-		this.elements.$editorPanelFooterToggle.on( 'click', () => this.toggleComments() );
+		if ( elementorFrontend.isEditMode() ) {
+			this.elements.$editorPanelFooterToggle.on( 'click', () => this.toggleComments() );
+		} else {
+			this.elements.$adminBarToggle.on( 'click', () => this.toggleComments() );
+		}
+
 		this.elements.$closeButton.on( 'click', () => this.modal.hide() );
+	}
+
+	getModalHeader() {
+		return this.renderContentTemplate( '#tmpl-e-comments-header' );
+	}
+
+	getModalFooter() {
+		return this.renderContentTemplate( '#tmpl-e-comments-footer' );
+	}
+
+	getEmptyContent() {
+		return this.renderContentTemplate( '#tmpl-e-comments--empty' );
+	}
+
+	getCommentsContent() {
+		return this.renderContentTemplate( '#tmpl-e-comments', { comments: elementorCommon.config.comments } );
 	}
 
 	getModalContent() {
 		const headerContent = this.getModalHeader(),
-			container = jQuery( '<div/>', { class: '.e-comments-container' } );
+			footerContent = this.getModalFooter(),
+			container = jQuery( '<div/>', { id: 'e-comments-container' } );
 
-		container.html( headerContent );
+		let commentsContent;
 
-		return jQuery( '<div/>', { class: '.e-comments-container' } ).html( headerContent );
+		if ( elementorCommon.config.comments.length ) {
+			commentsContent = this.getCommentsContent();
+		} else {
+			commentsContent = this.getEmptyContent();
+		}
+
+		container.html( headerContent + commentsContent + footerContent );
+
+		return container;
 	}
 
-	getModalHeader() {
-		return Marionette.Renderer.render( Marionette.TemplateCache.get( '#tmpl-e-comments' ) );
+	renderContentTemplate( template, args = null ) {
+		return Marionette.Renderer.render( Marionette.TemplateCache.get( template ), args );
 	}
 
 	initModal() {
