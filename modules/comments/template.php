@@ -24,7 +24,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <script type="text/template" id="tmpl-e-comments-header">
 	<div id="e-comments__header">
-		<span class="e-comments-empty"></span>
 		<div id="e-comments__header__title"><?php echo __( 'Comments', 'elementor' ); ?></div>
 		<i id="e-comments__close" class="eicon-close"></i>
 	</div>
