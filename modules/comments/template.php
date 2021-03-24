@@ -10,12 +10,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div id="e-comments__elements">
 		<# comments.forEach( ( comment ) => { #>
 			<div class="e-comments__comment-item">
-				<div class="e-comments__comment-item-id">{{{ comment.id }}}</div>
+				<div class="e-comments__comment-item-id" style="background-image: url(<?php echo ELEMENTOR_URL . 'modules/comments/assets/images/pin-outline.svg'; ?>)">{{{ comment.id }}}</div>
 				<div class="e-comments__comment_meta">
 					<span class="e-comments__comment-author">{{{ comment.author_name }}}</span>
 					<span class="e-comments__comment-date">{{{ comment.date }}}</span>
 					<p class="e-comments__comment-excerpt">{{ comment.content.raw }}</p>
-					<p class="e-comments__comment-num-replies">{{{ comment.numReplies }}}</p>
+					<p class="e-comments__comment-num-replies">{{{ comment.children_count ? comment.children_count + ' replies' : '' }}}</p>
 				</div>
 			</div>
 		<#} ); #>
