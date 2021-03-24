@@ -98,7 +98,7 @@ class Module extends BaseApp {
 			return $config + $this->get_data();
 		} );
 
-		add_action( 'rest_api_init', function () {
+		if ( function_exists( 'register_rest_field' ) ) {
 			register_rest_field(
 				'comment',
 				'element_id',
@@ -124,6 +124,8 @@ class Module extends BaseApp {
 					},
 				]
 			);
+		}
+
 
 			add_action('rest_after_insert_comment', function ( $object ) {
 				if ( ! get_comment_meta( $object->comment_ID, '_elementor_element_id', true ) ) {
@@ -152,7 +154,6 @@ class Module extends BaseApp {
 					);
 				}
 			});
-		} );
 
 		add_action( 'admin_bar_menu', function ( $wp_admin_bar ) {
 			$wp_admin_bar->add_node( [

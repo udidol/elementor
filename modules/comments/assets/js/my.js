@@ -64,9 +64,8 @@ function NewComment( props ) {
 		fetch( elementorCommon.config.urls.rest + 'wp/v2/comments', {
 			method: 'POST',
 			body: JSON.stringify( {
-				parent: props.id,
 				content: input,
-				element_id: props.element_id,
+				element_id: props.elementId,
 				post: elementorCommon.config.post_id,
 			} ),
 			headers: { 'X-WP-Nonce': wpApiSettings.nonce, 'Content-Type': 'application/json' },
@@ -171,7 +170,7 @@ jQuery( () => {
 			return;
 		}
 
-		const myElement = e.srcElement.closest( '.elementor-section, .elementor-column, .elementor-widget' );
+		const myElement = e.srcElement.closest( '.elementor-widget' );
 
 		const iconWrapper = document.createElement( 'div' );
 		const icon = document.createElement( 'div' );
