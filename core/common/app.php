@@ -5,6 +5,7 @@ use Elementor\Core\Base\App as BaseApp;
 use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
 use Elementor\Core\Common\Modules\Finder\Module as Finder;
 use Elementor\Core\Common\Modules\Connect\Module as Connect;
+use Elementor\Modules\Comments\Module as Comments;
 use Elementor\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -62,6 +63,8 @@ class App extends BaseApp {
 		}
 
 		$this->add_component( 'connect', new Connect() );
+
+		$this->add_component( 'comments', new Comments() );
 	}
 
 	/**

@@ -1037,6 +1037,7 @@ class Editor {
 			'templates',
 			'navigator',
 			'hotkeys',
+			'comments-templates'
 		];
 
 		foreach ( $template_names as $template_name ) {
