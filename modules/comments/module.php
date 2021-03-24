@@ -119,5 +119,13 @@ class Module extends BaseApp {
 			});
 		} );
 
+		add_action( 'admin_bar_menu', function ( $wp_admin_bar ) {
+			$wp_admin_bar->add_node( [
+				'id'     => 'elementor_comments',
+				'title'  => __( 'Comments', 'elementor-beta' ),
+				'parent' => 'top-secondary',
+				'href'   => '#',
+			] );
+		} );
 	}
 }
