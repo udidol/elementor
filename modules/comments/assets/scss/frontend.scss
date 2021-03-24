@@ -17,6 +17,13 @@
 		background-color: #fff;
 		border-bottom: 1px solid $gray-bg;
 		cursor: move;
+		text-align: center;
+	}
+
+	&__close {
+		position: absolute;
+		right: 10px;
+		top: 15px;
 	}
 
 	&__add-comment {
