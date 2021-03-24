@@ -31,6 +31,7 @@ class Module extends BaseApp {
 
 		return [
 			'comments' => $comments->all(),
+			'post_id' => get_queried_object_id(),
 		];
 	}
 
@@ -63,18 +64,26 @@ class Module extends BaseApp {
 
 
 	public function __construct() {
-//		add_action( 'wp_enqueue_scripts', function () {
-//			wp_enqueue_script(
-//				'elementor-comments',
-//				$this->get_js_assets_url( 'elementor-comments' ),
-//				[
-//					'react',
-//					'react-dom',
-//				],
-//				ELEMENTOR_VERSION,
-//				true
-//			);
-//		} );
+		add_action( 'wp_enqueue_scripts', function () {
+			wp_enqueue_script(
+				'elementor-comments',
+				$this->get_js_assets_url( 'elementor-comments' ),
+				[
+					'jquery',
+					'react',
+					'react-dom',
+				],
+				ELEMENTOR_VERSION,
+				true
+			);
+
+			wp_enqueue_style(
+				'elementor-comments',
+				ELEMENTOR_URL . 'modules/comments/assets/scss/style.css',
+				[],
+				ELEMENTOR_VERSION
+			);
+		} );
 
 		add_filter( 'elementor/common/config', function ( $config ) {
 			return $config + $this->get_data();
@@ -111,7 +120,6 @@ class Module extends BaseApp {
 				if ( ! get_comment_meta( $object->comment_ID, '_elementor_element_id', true ) ) {
 					return;
 				}
-
 				$content = $object->comment_content;
 				$matches = [];
 				preg_match_all( '/\@[^\s]+/', $content, $matches );
