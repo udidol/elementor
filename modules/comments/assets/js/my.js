@@ -56,6 +56,7 @@ function Comment( props ) {
 
 function NewComment( props ) {
 	const [ input, setInput ] = useState( '' );
+	const [ closed, setClosed ] = useState( false );
 	const [ data, setData ] = useState( null );
 
 	const submit = ( e ) => {
@@ -73,11 +74,23 @@ function NewComment( props ) {
 			.then( ( data ) => setData( data ) );
 	};
 
+	const close = ( e ) => {
+		e.preventDefault();
+
+		setClosed( true );
+	};
+
+	if ( closed ) {
+		return '';
+	}
+
 	return (
 		! data ? ( <div className="comment-modal">
 			<div>
-				<input style={{ width: '100%' }} value={input} onChange={( e ) => setInput( e.target.value )} />
-				<button onClick={( e ) => submit( e )}>Submit</button>
+				<input placeholder="Add a comment. Use @ to mention" className="comment-modal-input" style={{ width: '100%' }} value={input} onChange={( e ) => setInput( e.target.value )} />
+				<button className="comment-modal-submit" onClick={( e ) => submit( e )}>Submit</button>
+				<span id="comment-open"/>
+				<button className="comment-modal-cancel" onClick={( e ) => close( e )}>Cancel</button>
 			</div>
 		</div> ) : <Comment { ...data } comments={[]} />
 	);
