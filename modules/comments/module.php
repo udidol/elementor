@@ -26,8 +26,7 @@ class Module extends BaseApp {
 			} )
 			->filter( function ( $comment ) {
 				return $comment['element_id'];
-			} )
-		;
+			} );
 
 		return [
 			'comments' => $comments->all(),
@@ -35,7 +34,7 @@ class Module extends BaseApp {
 		];
 	}
 
-	private function transform_data($comment) {
+	private function transform_data( $comment ) {
 		$children = get_comments( [
 			'parent' => $comment->comment_ID,
 		] );
