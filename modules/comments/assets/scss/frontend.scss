@@ -2,7 +2,7 @@
 	font-family: Roboto, sans-serif;
 	border-radius: 5px;
 	width: 240px;
-	height: 339px;
+	min-height: 382px;
 	background-color: #fff;
 	box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.1);
 	user-select: none;
@@ -45,6 +45,7 @@
 			img,
 			i {
 				width: 16px;
+				color: #606060;
 			}
 		}
 
