@@ -227,7 +227,7 @@ class App extends BaseApp {
 
 		$active_experimental_features = array_fill_keys( array_keys( $active_experimental_features ), true );
 
-		return [
+		return apply_filters( 'elementor/common/config', [
 			'version' => ELEMENTOR_VERSION,
 			'isRTL' => is_rtl(),
 			'isDebug' => ( defined( 'WP_DEBUG' ) && WP_DEBUG ),
@@ -238,7 +238,7 @@ class App extends BaseApp {
 				'assets' => ELEMENTOR_ASSETS_URL,
 				'rest' => get_rest_url(),
 			],
-		];
+		] );
 	}
 
 	/**

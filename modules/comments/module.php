@@ -1,6 +1,7 @@
 <?php
 namespace Elementor\Modules\Comments;
 
+use Elementor\Plugin;
 use Elementor\Core\Utils\Collection;
 use Elementor\Core\Base\App as BaseApp;
 
@@ -13,54 +14,71 @@ class Module extends BaseApp {
 		return 'comments';
 	}
 
-//	protected function get_init_settings() {
-//		$comments = new Collection( get_comments( [
-//			'parent' => 0,
-//			'post' => 2539,
-//		] ) );
-//
-//		$comments = $comments
-//			->map( function ( $comment ) {
-//				return [
-//					'id' => (int) $comment->comment_ID,
-//					'post' => (int) $comment->comment_post_ID,
-//					'parent' => (int) $comment->comment_parent,
-//					'user' => (int) $comment->user_id,
-//					'author_name' => $comment->comment_author,
-//					'date' => mysql_to_rfc3339( $comment->comment_date ),
-//					'content' => [
-//						'raw' => $comment->comment_content,
-//					],
-//					'link' => get_comment_link( $comment ),
-//					'widget' => get_comment_meta( $comment->comment_ID, '_elementor_widget', true ),
-//				];
-//			} )
-//			->filter( function ( $comment ) {
-//				return $comment['widget'];
-//			} );
-//
-//		return [
-//			'comments' => $comments->all(),
-//		];
-//	}
+	protected function get_data() {
+		$comments = new Collection( get_comments( [
+			'parent' => 0,
+			'post'   => get_queried_object_id(),
+		] ) );
+
+		$comments = $comments
+			->map( function ( $comment ) {
+				return $this->transform_data( $comment );
+			} )
+			->filter( function ( $comment ) {
+				return $comment['element_id'];
+			} )
+		;
+
+		return [
+			'comments' => $comments->all(),
+		];
+	}
+
+	private function transform_data($comment) {
+		$children = get_comments( [
+			'parent' => $comment->comment_ID,
+		] );
+
+		if ( ! $children ) {
+			$children = [];
+		}
+
+		return [
+			'id'          => (int) $comment->comment_ID,
+			'post'        => (int) $comment->comment_post_ID,
+			'parent'      => (int) $comment->comment_parent,
+			'user'        => (int) $comment->user_id,
+			'author_name' => $comment->comment_author,
+			'date'        => mysql_to_rfc3339( $comment->comment_date ),
+			'content'     => [
+				'raw' => $comment->comment_content,
+			],
+			'link'        => get_comment_link( $comment ),
+			'element_id'  => get_comment_meta( $comment->comment_ID, '_elementor_element_id', true ),
+			'children' => array_map( function ( $child ) {
+				return $this->transform_data( $child );
+			}, $children ),
+		];
+	}
 
 
 	public function __construct() {
 //		add_action( 'wp_enqueue_scripts', function () {
-//			wp_register_script(
+//			wp_enqueue_script(
 //				'elementor-comments',
-//				$this->get_js_assets_url( 'admin' ),
+//				$this->get_js_assets_url( 'elementor-comments' ),
 //				[
-//					'elementor-common',
+//					'react',
+//					'react-dom',
 //				],
 //				ELEMENTOR_VERSION,
 //				true
 //			);
-//
-//			wp_enqueue_script( 'elementor-comments' );
-//
-//			$this->print_config();
 //		} );
+
+		add_filter( 'elementor/common/config', function ( $config ) {
+			return $config + $this->get_data();
+		} );
 
 		add_action( 'rest_api_init', function () {
 			register_rest_field(
@@ -127,5 +145,6 @@ class Module extends BaseApp {
 				'href'   => '#',
 			] );
 		} );
+
 	}
 }
