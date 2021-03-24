@@ -1,6 +1,6 @@
 const { useEffect, useState } = React;
 
-// let isActive = false;
+let isActive = false;
 
 function Comment( props ) {
 	const [ input, setInput ] = useState( '' );
@@ -56,6 +56,7 @@ function Comment( props ) {
 
 function NewComment( props ) {
 	const [ input, setInput ] = useState( '' );
+	const [ data, setData ] = useState( null );
 
 	const submit = ( e ) => {
 		e.preventDefault();
@@ -70,16 +71,16 @@ function NewComment( props ) {
 			} ),
 			headers: { 'X-WP-Nonce': wpApiSettings.nonce, 'Content-Type': 'application/json' },
 		} ).then( ( response ) => response.json() )
-			.then( ( data ) => setChildren( ( prev ) => [ ...prev, data ] ) );
+			.then( ( data ) => setData( data ) );
 	};
 
 	return (
-		<div className="comment-modal">
+		! data ? ( <div className="comment-modal">
 			<div>
 				<input style={{ width: '100%' }} value={input} onChange={( e ) => setInput( e.target.value )} />
 				<button onClick={( e ) => submit( e )}>Submit</button>
 			</div>
-		</div>
+		</div> ) : <Comment { ...data } comments={[]} />
 	);
 }
 
@@ -166,6 +167,10 @@ jQuery( () => {
 		} );
 
 	document.addEventListener( 'click', ( e ) => {
+		if ( ! isActive ) {
+			return;
+		}
+
 		const myElement = e.srcElement.closest( '.elementor-section, .elementor-column, .elementor-widget' );
 
 		const iconWrapper = document.createElement( 'div' );
@@ -184,6 +189,8 @@ jQuery( () => {
 			<NewComment elementId={myElement.getAttribute( 'data-id' )} />,
 			modal
 		);
+
+		isActive = false;
 		// ReactDOM.render(
 		// 	<Comment { ...comment } comments={data} />,
 		// 	modal
