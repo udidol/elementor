@@ -85,6 +85,12 @@ class Module extends BaseApp {
 			);
 		} );
 
+		add_action( 'wp_head', function() {
+			?>
+			<div id="elementor-comments-navigator"></div>
+			<?php
+		} );
+
 		add_filter( 'elementor/common/config', function ( $config ) {
 			return $config + $this->get_data();
 		} );

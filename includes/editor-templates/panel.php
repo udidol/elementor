@@ -77,6 +77,10 @@ $document = Plugin::$instance->documents->get( Plugin::$instance->editor->get_po
 		<i class="eicon-history" aria-hidden="true"></i>
 		<span class="elementor-screen-only"><?php echo __( 'History', 'elementor' ); ?></span>
 	</div>
+	<div id="elementor-panel-footer-comments" class="elementor-panel-footer-tool tooltip-target" data-tooltip="<?php esc_attr_e( 'Comments', 'elementor' ); ?>">
+		<i class="eicon-comments" aria-hidden="true"></i>
+		<span class="elementor-screen-only"><?php echo __( 'Comments', 'elementor' ); ?></span>
+	</div>
 	<div id="elementor-panel-footer-responsive" class="elementor-panel-footer-tool elementor-toggle-state">
 		<i class="eicon-device-desktop tooltip-target" aria-hidden="true" data-tooltip="<?php esc_attr_e( 'Responsive Mode', 'elementor' ); ?>"></i>
 		<span class="elementor-screen-only">

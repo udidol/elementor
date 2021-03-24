@@ -15,6 +15,7 @@ module.exports = Marionette.ItemView.extend( {
 		saveTemplate: '#elementor-panel-footer-sub-menu-item-save-template',
 		history: '#elementor-panel-footer-history',
 		navigator: '#elementor-panel-footer-navigator',
+		comments: '#elementor-panel-footer-comments',
 	},
 
 	events: {
