@@ -19,8 +19,6 @@ export default class extends elementorModules.ViewModule {
 			elements.$adminBarToggle = jQuery( selectors.adminBarToggle );
 		}
 
-		elements.$closeButton = jQuery( selectors.closeButton );
-
 		return elements;
 	}
 
@@ -30,8 +28,6 @@ export default class extends elementorModules.ViewModule {
 		} else {
 			this.elements.$adminBarToggle.on( 'click', () => this.toggleComments() );
 		}
-
-		this.elements.$closeButton.on( 'click', () => this.modal.hide() );
 	}
 
 	getModalHeader() {
@@ -73,7 +69,8 @@ export default class extends elementorModules.ViewModule {
 	}
 
 	initModal() {
-		const modalOptions = {
+		const selectors = this.getSettings( 'selectors' ),
+			modalOptions = {
 			id: 'e-comments',
 			closeButton: false,
 			message: this.getModalContent(),
@@ -81,6 +78,12 @@ export default class extends elementorModules.ViewModule {
 				onOutsideClick: false,
 				onEscKeyPress: true,
 				onBackgroundClick: false,
+			},
+			onShow: () => {
+				if ( ! this.elements.$closeButton ) {
+					this.elements.$closeButton = jQuery( selectors.closeButton );
+					this.elements.$closeButton.on( 'click', () => this.modal.hide() );
+				}
 			},
 		};
 
