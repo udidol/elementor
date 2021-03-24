@@ -62,6 +62,9 @@ class Module extends BaseApp {
 		];
 	}
 
+	public function add_template() {
+		Plugin::$instance->common->add_template( __DIR__ . '/template.php' );
+	}
 
 	public function __construct() {
 		add_action( 'wp_enqueue_scripts', function () {
@@ -160,5 +163,6 @@ class Module extends BaseApp {
 			] );
 		} );
 
+		$this->add_template();
 	}
 }
