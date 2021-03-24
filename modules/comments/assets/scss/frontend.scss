@@ -87,3 +87,18 @@
 	}
 }
 
+.e-comments {
+
+	&__comment {
+
+		&-item {
+			display: flex;
+			align-items: center;
+		}
+
+		&-excerpt,
+		&-num-replies {
+			margin-bottom: 0;
+		}
+	}
+}

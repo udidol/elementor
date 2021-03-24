@@ -12,10 +12,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="e-comments__comment-item">
 				<div class="e-comments__comment-item-id">{{{ comment.id }}}</div>
 				<div class="e-comments__comment_meta">
-					<span class="e-comments__comment-author">{{{ comment.author }}}</span>
-					<span class="e-comments__comment-timestamp">{{{ comment.timestamp }}}</span>
-					<p class="e-comments__comment-excerpt">{{ comment.content }}</p>
-					<p class="e-comments__num-replies">{{{ comment.numReplies }}}</p>
+					<span class="e-comments__comment-author">{{{ comment.author_name }}}</span>
+					<span class="e-comments__comment-date">{{{ comment.date }}}</span>
+					<p class="e-comments__comment-excerpt">{{ comment.content.raw }}</p>
+					<p class="e-comments__comment-num-replies">{{{ comment.numReplies }}}</p>
 				</div>
 			</div>
 		<#} ); #>
