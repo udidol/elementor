@@ -35,19 +35,19 @@ export default class extends elementorModules.ViewModule {
 	}
 
 	getModalHeader() {
-		return this.renderTemplate( '#tmpl-e-comments-header' );
+		return this.renderContentTemplate( '#tmpl-e-comments-header' );
 	}
 
 	getModalFooter() {
-		return this.renderTemplate( '#tmpl-e-comments-footer' );
+		return this.renderContentTemplate( '#tmpl-e-comments-footer' );
 	}
 
 	getEmptyContent() {
-		return this.renderTemplate( '#tmpl-e-comments--empty' );
+		return this.renderContentTemplate( '#tmpl-e-comments--empty' );
 	}
 
 	getCommentsContent() {
-		return this.renderTemplate( '#tmpl-e-comments', { comments: elementorCommon.config.comments } );
+		return this.renderContentTemplate( '#tmpl-e-comments', { comments: elementorCommon.config.comments } );
 	}
 
 	getModalContent() {
@@ -68,7 +68,7 @@ export default class extends elementorModules.ViewModule {
 		return container;
 	}
 
-	renderTemplate( template, args = null ) {
+	renderContentTemplate( template, args = null ) {
 		return Marionette.Renderer.render( Marionette.TemplateCache.get( template ), args );
 	}
 
