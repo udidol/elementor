@@ -31,9 +31,15 @@ function Comment( props ) {
 	return (
 		<div className="comment-modal" id={`comment-modal-${ props.id }`}>
 			<div>
-				<div style={{ display: 'flex', alignItems: 'center' }}>
-					<img src={props.author_avatar_urls[ 48 ]} style={{ height: '30px', 	borderRadius: '300px' }}/>
-					<span style={{ marginLeft: '10px' }}> {props.author_name} </span>
+				<div className="comment-wrapper">
+					<div style={{ display: 'flex', alignItems: 'center' }}>
+						<img src={props.author_avatar_urls[ 48 ]} style={{ height: '30px', 	borderRadius: '300px' }}/>
+						<span style={{ marginLeft: '10px' }}> {props.author_name} </span>
+					</div>
+					<div>
+						<i className="eicon-ellipsis-v"/>
+						<i className="eicon-check"/>
+					</div>
 				</div>
 				<div>
 					{ date.toLocaleString() }
@@ -43,9 +49,14 @@ function Comment( props ) {
 				{ children.map( ( item ) => {
 					return (
 						<div key={item.id}>
-							<div style={{ display: 'flex', alignItems: 'center' }}>
-								<img src={item.author_avatar_urls[ 48 ]} style={{ height: '30px', 	borderRadius: '300px' }}/>
-								<span style={{ marginLeft: '10px' }}> {item.author_name} </span>
+							<div className="comment-wrapper">
+								<div style={{ display: 'flex', alignItems: 'center' }}>
+									<img src={item.author_avatar_urls[ 48 ]} style={{ height: '30px', 	borderRadius: '300px' }}/>
+									<span style={{ marginLeft: '10px' }}> {item.author_name} </span>
+								</div>
+								<div>
+									<i className="eicon-ellipsis-v"/>
+								</div>
 							</div>
 							<div dangerouslySetInnerHTML={{ __html: item.content.rendered }} />
 						</div>
@@ -53,7 +64,10 @@ function Comment( props ) {
 				} ) }
 
 				<input style={{ width: '100%' }} value={input} onChange={( e ) => setInput( e.target.value )} />
-				<button onClick={( e ) => submit( e )}>Submit</button>
+				<div id="comment-box-right">
+					<button className="comment-modal-cancel">Cancel</button>
+					<button className="comment-modal-submit" onClick={( e ) => submit( e )}>Submit</button>
+				</div>
 			</div>
 		</div>
 	);
