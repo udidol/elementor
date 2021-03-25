@@ -66,10 +66,10 @@ function Comment( props ) {
 					);
 				} ) }
 
-				<input style={{ width: '100%' }} value={input} onChange={( e ) => setInput( e.target.value )} ref={myRef} />
+				<input style={{ width: '100%' }} value={input} onChange={( e ) => setInput( e.target.value )} ref={myRef} placeholder="Add a comment. Use @ to mention"/>
 				<div id="comment-box-right">
 					<button className="comment-modal-cancel">Cancel</button>
-					<button className="comment-modal-submit" onClick={( e ) => submit( e )}>Submit</button>
+					<button className="comment-modal-submit" onClick={( e ) => submit( e )}>Comment</button>
 				</div>
 			</div>
 		</div>
