@@ -160,7 +160,7 @@ function NewComment( props ) {
 
 jQuery( () => {
 	const element = document.createElement( 'div' ),
-		htmlElement = document.querySelector( 'html' );
+		bodyElement = document.querySelector( 'body' );
 
 	element.setAttribute( 'id', 'e-comments' );
 
@@ -170,7 +170,7 @@ jQuery( () => {
 		document.querySelector( '#e-comments__add-comment' ).addEventListener( 'click', () => {
 			isActive = ! isActive;
 
-			htmlElement.classList.add( 'e-comments-pin-cursor' );
+			bodyElement.classList.add( 'e-comments-pin-cursor' );
 		} );
 	} );
 
@@ -223,6 +223,10 @@ jQuery( () => {
 
 		const myElement = e.srcElement.closest( '.elementor-widget' );
 
+		if ( ! myElement ) {
+			return;
+		}
+
 		const iconWrapper = document.createElement( 'div' );
 		const icon = document.createElement( 'div' );
 		const modal = document.createElement( 'div' );
@@ -242,7 +246,7 @@ jQuery( () => {
 			modal
 		);
 
-		htmlElement.classList.remove( 'e-comments-pin-cursor' );
+		bodyElement.classList.remove( 'e-comments-pin-cursor' );
 
 		isActive = false;
 		// ReactDOM.render(
