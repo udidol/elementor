@@ -1,13 +1,20 @@
-const { useEffect, useState } = React;
+const { useEffect, useState, useRef } = React;
 
 let isActive = false;
 
 function Comment( props ) {
 	const [ input, setInput ] = useState( '' );
 	const [ children, setChildren ] = useState( [] );
+	const myRef = useRef();
 
 	useEffect( () => {
 		setChildren( props.comments.filter( ( current ) => current.parent === props.id ) );
+	}, [] );
+
+	useEffect( () => {
+		if ( window.cmt_mntn ) {
+			jQuery( myRef.current ).cmt_mntn_mentions( window.cmt_mntn.mentions.users );
+		}
 	}, [] );
 
 	const submit = ( e ) => {
@@ -36,10 +43,6 @@ function Comment( props ) {
 						<img src={props.author_avatar_urls[ 48 ]} style={{ height: '30px', 	borderRadius: '300px' }}/>
 						<span style={{ marginLeft: '10px' }}> {props.author_name} </span>
 					</div>
-					<div>
-						<i className="eicon-ellipsis-v"/>
-						<i className="eicon-check"/>
-					</div>
 				</div>
 				<div>
 					{ date.toLocaleString() }
@@ -63,7 +66,7 @@ function Comment( props ) {
 					);
 				} ) }
 
-				<input style={{ width: '100%' }} value={input} onChange={( e ) => setInput( e.target.value )} />
+				<input style={{ width: '100%' }} value={input} onChange={( e ) => setInput( e.target.value )} ref={myRef} />
 				<div id="comment-box-right">
 					<button className="comment-modal-cancel">Cancel</button>
 					<button className="comment-modal-submit" onClick={( e ) => submit( e )}>Submit</button>
@@ -78,6 +81,13 @@ function NewComment( props ) {
 	const [ closed, setClosed ] = useState( false );
 	const [ data, setData ] = useState( null );
 	const [ toggle, setToggle ] = useState( false );
+	const myRef = useRef();
+
+	useEffect( () => {
+		if ( window.cmt_mntn ) {
+			jQuery( myRef.current ).cmt_mntn_mentions( window.cmt_mntn.mentions.users );
+		}
+	}, [] );
 
 	const submit = ( e ) => {
 		e.preventDefault();
@@ -107,7 +117,7 @@ function NewComment( props ) {
 	return (
 		! data ? ( <div className="comment-modal">
 			<div>
-				<input placeholder="Add a comment. Use @ to mention" className="comment-modal-input" style={{ width: '100%' }} value={input} onChange={( e ) => setInput( e.target.value )} />
+				<input placeholder="Add a comment. Use @ to mention" className="comment-modal-input" style={{ width: '100%' }} value={input} onChange={( e ) => setInput( e.target.value )} ref={myRef}/>
 				<div id="comment-box-left">
 					<span id="comment-open" onClick={() => setToggle( ( prev ) => ! prev )}>
 						{ ! toggle && <svg width="12" height="16" viewBox="0 0 12 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M10.5 5.375H9.75V3.875C9.75 1.805 8.07 0.125 6 0.125C3.93 0.125 2.25 1.805 2.25 3.875H3.75C3.75 2.63 4.755 1.625 6 1.625C7.245 1.625 8.25 2.63 8.25 3.875V5.375H1.5C0.675 5.375 0 6.05 0 6.875V14.375C0 15.2 0.675 15.875 1.5 15.875H10.5C11.325 15.875 12 15.2 12 14.375V6.875C12 6.05 11.325 5.375 10.5 5.375ZM1.5 14.375V6.875H10.5V14.375H1.5ZM7.5 10.625C7.5 11.45 6.825 12.125 6 12.125C5.175 12.125 4.5 11.45 4.5 10.625C4.5 9.8 5.175 9.125 6 9.125C6.825 9.125 7.5 9.8 7.5 10.625Z" fill="black" fillOpacity="0.54"/></svg> }
