@@ -30,7 +30,7 @@ function Comment( props ) {
 
 	return (
 		<div className="comment-modal" id={`comment-modal-${ props.id }`}>
-			<div>
+			<div className="comment-modal-modal">
 				<div className="comment-wrapper">
 					<div style={{ display: 'flex', alignItems: 'center' }}>
 						<img src={props.author_avatar_urls[ 48 ]} style={{ height: '30px', 	borderRadius: '300px' }}/>

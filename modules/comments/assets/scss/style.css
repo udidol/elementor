@@ -53,7 +53,7 @@ div#comment-box-left {
 	display: inline-block;
 }
 
-.comment-modal div {
+.comment-modal-modal {
     display: flex;
     align-items: center;
     justify-content: space-between;
