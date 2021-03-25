@@ -38,6 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 		<a href="#" id="e-comments__add-comment">Add Comment</a>
 	</div>
+	<div id="e-comments__footer-bottom"><i class="eicon-ellipsis-h" aria-hidden="true"></i></div>
 </script>
 
 <script type="text/template" id="tmpl-e-comments__elements">
