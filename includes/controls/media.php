@@ -1,6 +1,7 @@
 <?php
 namespace Elementor;
 
+use Elementor\Core\Files\Assets\Files_Upload_Handler;
 use Elementor\Modules\DynamicTags\Module as TagsModule;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -49,6 +50,13 @@ class Control_Media extends Control_Base_Multiple {
 		];
 	}
 
+	public function support_svg_json_import() {
+		$mimes['svg'] = 'image/svg+xml';
+		$mimes['json'] = 'application/json';
+
+		return $mimes;
+	}
+
 	/**
 	 * Import media images.
 	 *
@@ -67,7 +75,17 @@ class Control_Media extends Control_Base_Multiple {
 			return $settings;
 		}
 
+		$is_unfiltered_files_upload_enabled = Files_Upload_Handler::is_enabled();
+
+		if ( $is_unfiltered_files_upload_enabled ) {
+			add_filter( 'upload_mimes', [ $this, 'support_svg_json_import' ], 100 );
+		}
+
 		$settings = Plugin::$instance->templates_manager->get_import_images_instance()->import( $settings );
+
+		if ( $is_unfiltered_files_upload_enabled ) {
+			remove_filter( 'upload_mimes', [ $this, 'support_svg_json_import' ], 100 );
+		}
 
 		if ( ! $settings ) {
 			$settings = [
